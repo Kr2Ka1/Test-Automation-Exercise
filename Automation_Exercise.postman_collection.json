@@ -1,0 +1,2180 @@
+{
+	"info": {
+		"_postman_id": "d055553a-4145-41cd-8754-2741408513d8",
+		"name": "Automation_Exercise",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "41089263"
+	},
+	"item": [
+		{
+			"name": "Products",
+			"item": [
+				{
+					"name": "All Products List",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"const respData = pm.response.json();\r",
+									" \r",
+									"pm.test(\"Product IDs are unique\", function () {\r",
+									"\r",
+									"    const products = respData.products;\r",
+									" \r",
+									"    pm.expect(products).to.be.an(\"array\");\r",
+									" \r",
+									"    const ids = products.map(product => product.id);\r",
+									"\r",
+									"    const uniqueIds = new Set(ids);\r",
+									" \r",
+									"    pm.expect(uniqueIds.size).to.eql(ids.length);\r",
+									"\r",
+									"});\r",
+									" \r",
+									"pm.test(\"Products list is not empty and have atleast one product with all properties\", () => {\r",
+									"\r",
+									"    pm.expect(respData).to.have.property('products').and.not.empty;\r",
+									"\r",
+									"    pm.expect(respData.products).to.be.an('array').that.is.not.empty;\r",
+									"\r",
+									"    respData.products.forEach(product => {  \r",
+									"\r",
+									"        pm.expect(product).to.have.property('id');\r",
+									"\r",
+									"        pm.expect(product).to.have.property('name');\r",
+									"\r",
+									"        pm.expect(product).to.have.property('price');\r",
+									"\r",
+									"        pm.expect(product).to.have.property('brand');\r",
+									"\r",
+									"        pm.expect(product).to.have.property('category');\r",
+									"\r",
+									"        pm.expect(product.category).to.have.property('usertype');\r",
+									"\r",
+									"        pm.expect(product.category.usertype).to.have.property('usertype');\r",
+									"\r",
+									"        pm.expect(product.category).to.have.property('category');\r",
+									"\r",
+									"    });\r",
+									"\r",
+									"});\r",
+									" \r",
+									"pm.test(\"Products in list have correct types of properties values\", () => {\r",
+									"\r",
+									"    respData.products.forEach(product => {  \r",
+									"\r",
+									"        pm.expect(product.id).to.be.a('number');\r",
+									"\r",
+									"        pm.expect(product.name).to.be.a('string');\r",
+									"\r",
+									"        pm.expect(product.price).to.be.a('string');\r",
+									"\r",
+									"        pm.expect(product.brand).to.be.a('string');\r",
+									"\r",
+									"        pm.expect(product.category).to.be.a('object');\r",
+									"\r",
+									"        pm.expect(product.category.usertype).to.be.a('object');\r",
+									"\r",
+									"        pm.expect(product.category.usertype.usertype).to.be.a('string');\r",
+									"\r",
+									"        pm.expect(product.category.category).to.be.a('string');\r",
+									"\r",
+									"    });\r",
+									"\r",
+									"});\r",
+									" \r",
+									"pm.test(\"Response status code is 200\", () => {\r",
+									"\r",
+									"    pm.expect(respData).to.have.property('responseCode').and.eq(200);\r",
+									"\r",
+									"    pm.response.to.have.status(200);\r",
+									"\r",
+									"});\r",
+									" \r",
+									"pm.test(\"Response time is less than 1s\", () => {\r",
+									"\r",
+									"  pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+									"\r",
+									"});\r",
+									" "
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://automationexercise.com/api/productsList",
+							"protocol": "https",
+							"host": [
+								"automationexercise",
+								"com"
+							],
+							"path": [
+								"api",
+								"productsList"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Brads",
+			"item": [
+				{
+					"name": "All Brands List",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const respData = pm.response.json();\r",
+									" pm.test(\"All product IDs are unique\", function () {\r",
+									"    const response = pm.response.json(); // Gauna API atsakymą kaip JSON\r",
+									"    pm.expect(response).to.be.an(\"object\").and.to.have.property(\"brands\"); // Patikrina, ar yra \"products\"\r",
+									"\r",
+									"    const brands = response.brands;\r",
+									"    pm.expect(brands).to.be.an(\"array\").and.to.have.length.above(0); // Užtikrina, kad masyvas nėra tuščias\r",
+									"\r",
+									"    const ids = brands.map(p => p.id); // Surenka visus ID\r",
+									"    const uniqueIds = new Set(ids); // Saugo unikalius ID\r",
+									"\r",
+									"    pm.expect(uniqueIds.size, \"Duplicate brands IDs found!\").to.eql(ids.length); // Palygina dydžius\r",
+									"});\r",
+									"\r",
+									" \r",
+									"pm.test(\"Brands list is not empty and have atleast one brans with all properties\", () => {\r",
+									"\r",
+									"    pm.expect(respData).to.have.property('brands').and.not.empty;\r",
+									"\r",
+									"    pm.expect(respData.brands).to.be.an('array').that.is.not.empty;\r",
+									"\r",
+									"    respData.brands.forEach((brand) => {  \r",
+									"\r",
+									"        pm.expect(brand).to.have.property('id');\r",
+									"\r",
+									"        pm.expect(brand).to.have.property('brand');\r",
+									"\r",
+									"    });\r",
+									"\r",
+									"});\r",
+									" \r",
+									"pm.test(\"Brands in list have correct types of properties values\", () => {\r",
+									"\r",
+									"    respData.brands.forEach((brand) => {  \r",
+									"\r",
+									"        pm.expect(brand.id).to.be.a('number');\r",
+									"\r",
+									"        pm.expect(brand.brand).to.be.a('string');\r",
+									"\r",
+									"    });\r",
+									"\r",
+									"});\r",
+									" \r",
+									"pm.test(\"Response status code is 200\", () => {\r",
+									"\r",
+									"    pm.expect(respData).to.have.property('responseCode').and.eq(200);\r",
+									"\r",
+									"    pm.response.to.have.status(200);\r",
+									"\r",
+									"});\r",
+									" \r",
+									"pm.test(\"Response time is less than 1s\", () => {\r",
+									"\r",
+									"  pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+									"\r",
+									"});\r",
+									" \r",
+									" "
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://automationexercise.com/api/brandsList",
+							"protocol": "https",
+							"host": [
+								"automationexercise",
+								"com"
+							],
+							"path": [
+								"api",
+								"brandsList"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "PUT All Brands",
+			"item": [
+				{
+					"name": "To All Brands List",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();\r",
+									" \r",
+									"pm.test(\"HTTP status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									" \r",
+									"pm.test(\"Response is JSON\", function () {\r",
+									"    pm.response.to.be.json;\r",
+									"});\r",
+									" \r",
+									"pm.test(\"Response has 'responseCode' equal to 405\", function () {\r",
+									"    pm.expect(jsonData.responseCode).to.eql(405);\r",
+									"});\r",
+									" \r",
+									"pm.test(\"Response has the correct 'message'\", function () {\r",
+									"    pm.expect(jsonData.message).to.eql(\"This request method is not supported.\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "https://automationexercise.com/api/brandsList",
+							"protocol": "https",
+							"host": [
+								"automationexercise",
+								"com"
+							],
+							"path": [
+								"api",
+								"brandsList"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Search product",
+			"item": [
+				{
+					"name": "To Search Product",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const respData = pm.response.json();\r",
+									" \r",
+									"// pm.test(\"A search term is mentioned in the product name or category\", () => {\r",
+									"\r",
+									"//     respData.products.forEach((product) => {\r",
+									"\r",
+									"//         const nameIncludesTop = product.name.toLowerCase().includes(pm.collectionVariables.get(\"search_product\"));\r",
+									"\r",
+									"//         const categoryIncludesTop = product.category.category.toLowerCase().includes(pm.collectionVariables.get(\"search_product\"));\r",
+									" \r",
+									"//         pm.expect(nameIncludesTop || categoryIncludesTop).to.be.true;\r",
+									"\r",
+									"//     });\r",
+									"\r",
+									"// })\r",
+									" pm.test(\"A search term is mentioned in the product name or category\", () => {\r",
+									"    // Įtraukiame paieškos žodį iš kolekcijos kintamojo\r",
+									"    const searchTerm = pm.collectionVariables.get(\"search_product\").toLowerCase();\r",
+									"\r",
+									"    respData.products.forEach((product) => {\r",
+									"        // Patikriname, ar pavadinime yra paieškos žodis\r",
+									"        const nameIncludesTop = product.name.toLowerCase().includes(searchTerm);\r",
+									"\r",
+									"        // Patikriname, ar kategorijoje yra paieškos žodis\r",
+									"        const categoryIncludesTop = product.category.category.toLowerCase().includes(searchTerm);\r",
+									" \r",
+									"        // Tikriname, ar bent viename iš šių laukų yra paieškos žodis\r",
+									"        pm.expect(nameIncludesTop || categoryIncludesTop).to.be.true;\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Products list is not empty and have atleast one product with all properties\", () => {\r",
+									"\r",
+									"    pm.expect(respData).to.have.property('products').and.not.empty;\r",
+									"\r",
+									"    pm.expect(respData.products).to.be.an('array').that.is.not.empty;\r",
+									"\r",
+									"    respData.products.forEach((product) => {  \r",
+									"\r",
+									"        pm.expect(product).to.have.property('id');\r",
+									"\r",
+									"        pm.expect(product).to.have.property('name');\r",
+									"\r",
+									"        pm.expect(product).to.have.property('price');\r",
+									"\r",
+									"        pm.expect(product).to.have.property('brand');\r",
+									"\r",
+									"        pm.expect(product).to.have.property('category');\r",
+									"\r",
+									"        pm.expect(product.category).to.have.property('usertype');\r",
+									"\r",
+									"        pm.expect(product.category.usertype).to.have.property('usertype');\r",
+									"\r",
+									"        pm.expect(product.category).to.have.property('category');\r",
+									"\r",
+									"    });\r",
+									"\r",
+									"});\r",
+									" \r",
+									"pm.test(\"Products in list have correct types of properties values\", () => {\r",
+									"\r",
+									"    respData.products.forEach((product) => {  \r",
+									"\r",
+									"        pm.expect(product.id).to.be.a('number');\r",
+									"\r",
+									"        pm.expect(product.name).to.be.a('string');\r",
+									"\r",
+									"        pm.expect(product.price).to.be.a('string');\r",
+									"\r",
+									"        pm.expect(product.brand).to.be.a('string');\r",
+									"\r",
+									"        pm.expect(product.category).to.be.a('object');\r",
+									"\r",
+									"        pm.expect(product.category.usertype).to.be.a('object');\r",
+									"\r",
+									"        pm.expect(product.category.usertype.usertype).to.be.a('string');\r",
+									"\r",
+									"        pm.expect(product.category.category).to.be.a('string');\r",
+									"\r",
+									"    });\r",
+									"\r",
+									"});\r",
+									" \r",
+									"pm.test(\"Response status code is 200\", () => {\r",
+									"\r",
+									"    pm.expect(respData).to.have.property('responseCode').and.eq(200);\r",
+									"\r",
+									"    pm.response.to.have.status(200);\r",
+									"\r",
+									"});\r",
+									" \r",
+									"pm.test(\"Response time is less than 1s\", () => {\r",
+									"\r",
+									"  pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+									"\r",
+									"});\r",
+									" "
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "search_product",
+									"value": "top",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://automationexercise.com/api/searchProduct",
+							"protocol": "https",
+							"host": [
+								"automationexercise",
+								"com"
+							],
+							"path": [
+								"api",
+								"searchProduct"
+							],
+							"query": [
+								{
+									"key": "search_product",
+									"value": "top",
+									"disabled": true
+								},
+								{
+									"key": "category",
+									"value": "Tops",
+									"disabled": true
+								},
+								{
+									"key": "id",
+									"value": "6",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							"const respData = pm.response.json();\r",
+							" \r",
+							"pm.test(\"A search term is mentioned in the product name or category\", () => {\r",
+							"\r",
+							"    respData.products.forEach((product) => {\r",
+							"\r",
+							"        const nameIncludesTop = product.name.toLowerCase().includes(pm.collectionVariables.get(\"search_product\"));\r",
+							"\r",
+							"        const categoryIncludesTop = product.category.category.toLowerCase().includes(pm.collectionVariables.get(\"search_product\"));\r",
+							" \r",
+							"        pm.expect(nameIncludesTop || categoryIncludesTop).to.be.true;\r",
+							"\r",
+							"    });\r",
+							"\r",
+							"})\r",
+							" \r",
+							"pm.test(\"Products list is not empty and have atleast one product with all properties\", () => {\r",
+							"\r",
+							"    pm.expect(respData).to.have.property('products').and.not.empty;\r",
+							"\r",
+							"    pm.expect(respData.products).to.be.an('array').that.is.not.empty;\r",
+							"\r",
+							"    respData.products.forEach((product) => {  \r",
+							"\r",
+							"        pm.expect(product).to.have.property('id');\r",
+							"\r",
+							"        pm.expect(product).to.have.property('name');\r",
+							"\r",
+							"        pm.expect(product).to.have.property('price');\r",
+							"\r",
+							"        pm.expect(product).to.have.property('brand');\r",
+							"\r",
+							"        pm.expect(product).to.have.property('category');\r",
+							"\r",
+							"        pm.expect(product.category).to.have.property('usertype');\r",
+							"\r",
+							"        pm.expect(product.category.usertype).to.have.property('usertype');\r",
+							"\r",
+							"        pm.expect(product.category).to.have.property('category');\r",
+							"\r",
+							"    });\r",
+							"\r",
+							"});\r",
+							" \r",
+							"pm.test(\"Products in list have correct types of properties values\", () => {\r",
+							"\r",
+							"    respData.products.forEach((product) => {  \r",
+							"\r",
+							"        pm.expect(product.id).to.be.a('number');\r",
+							"\r",
+							"        pm.expect(product.name).to.be.a('string');\r",
+							"\r",
+							"        pm.expect(product.price).to.be.a('string');\r",
+							"\r",
+							"        pm.expect(product.brand).to.be.a('string');\r",
+							"\r",
+							"        pm.expect(product.category).to.be.a('object');\r",
+							"\r",
+							"        pm.expect(product.category.usertype).to.be.a('object');\r",
+							"\r",
+							"        pm.expect(product.category.usertype.usertype).to.be.a('string');\r",
+							"\r",
+							"        pm.expect(product.category.category).to.be.a('string');\r",
+							"\r",
+							"    });\r",
+							"\r",
+							"});\r",
+							" \r",
+							"pm.test(\"Response status code is 200\", () => {\r",
+							"\r",
+							"    pm.expect(respData).to.have.property('responseCode').and.eq(200);\r",
+							"\r",
+							"    pm.response.to.have.status(200);\r",
+							"\r",
+							"});\r",
+							" \r",
+							"pm.test(\"Response time is less than 1s\", () => {\r",
+							"\r",
+							"  pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+							"\r",
+							"});\r",
+							" "
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Login",
+			"item": [
+				{
+					"name": "To Create/Register User Account",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();\r",
+									" \r",
+									"pm.test(\"HTTP status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									" \r",
+									"pm.test(\"Response is JSON\", function () {\r",
+									"    pm.response.to.be.json;\r",
+									"});\r",
+									" \r",
+									"pm.test(\"Response has 'responseCode' equal to 201\", function () {\r",
+									"    pm.expect(jsonData.responseCode).to.eql(201);\r",
+									"});\r",
+									" \r",
+									"pm.test(\"Response has the correct 'message'\", function () {\r",
+									"    pm.expect(jsonData.message).to.eql(\"User created!\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "Test",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "email@test.test.it",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "password11",
+									"type": "text"
+								},
+								{
+									"key": "title",
+									"value": "Mrs",
+									"type": "text"
+								},
+								{
+									"key": "birth_date",
+									"value": "30",
+									"type": "text"
+								},
+								{
+									"key": "birth_month",
+									"value": "12",
+									"type": "text"
+								},
+								{
+									"key": "birth_year",
+									"value": "1991",
+									"type": "text"
+								},
+								{
+									"key": "firstname",
+									"value": "tester",
+									"type": "text"
+								},
+								{
+									"key": "lastname",
+									"value": "testerTester",
+									"type": "text"
+								},
+								{
+									"key": "company",
+									"value": "tester",
+									"type": "text"
+								},
+								{
+									"key": "address1",
+									"value": "test 11 test",
+									"type": "text"
+								},
+								{
+									"key": "address2",
+									"value": "test 12 test",
+									"type": "text"
+								},
+								{
+									"key": "country",
+									"value": "test",
+									"type": "text"
+								},
+								{
+									"key": "zipcode",
+									"value": "12589",
+									"type": "text"
+								},
+								{
+									"key": "state",
+									"value": "test",
+									"type": "text"
+								},
+								{
+									"key": "city",
+									"value": "test",
+									"type": "text"
+								},
+								{
+									"key": "mobile_number",
+									"value": "0124521569",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://automationexercise.com/api/createAccount",
+							"protocol": "https",
+							"host": [
+								"automationexercise",
+								"com"
+							],
+							"path": [
+								"api",
+								"createAccount"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "Test",
+									"disabled": true
+								},
+								{
+									"key": "email",
+									"value": "email@test.test.it",
+									"disabled": true
+								},
+								{
+									"key": "password",
+									"value": "password11",
+									"disabled": true
+								},
+								{
+									"key": "title",
+									"value": "Mrs",
+									"description": "for example: Mr, Mrs, Miss",
+									"disabled": true
+								},
+								{
+									"key": "birth_date",
+									"value": "30",
+									"disabled": true
+								},
+								{
+									"key": "birth_month",
+									"value": "12",
+									"disabled": true
+								},
+								{
+									"key": "birth_year",
+									"value": "1991",
+									"disabled": true
+								},
+								{
+									"key": "firstname",
+									"value": "tester",
+									"disabled": true
+								},
+								{
+									"key": "lastname",
+									"value": "testerTester",
+									"disabled": true
+								},
+								{
+									"key": "company",
+									"value": "tester",
+									"disabled": true
+								},
+								{
+									"key": "address1",
+									"value": "test 11 test",
+									"disabled": true
+								},
+								{
+									"key": "address2",
+									"value": "test 12 test",
+									"disabled": true
+								},
+								{
+									"key": "country",
+									"value": "test",
+									"disabled": true
+								},
+								{
+									"key": "zipcode",
+									"value": "12589",
+									"disabled": true
+								},
+								{
+									"key": "state",
+									"value": "test",
+									"disabled": true
+								},
+								{
+									"key": "city",
+									"value": "test",
+									"disabled": true
+								},
+								{
+									"key": "mobile_number",
+									"value": "0124521569",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "To Verify Login with valid details",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();\r",
+									" \r",
+									"pm.test(\"HTTP status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									" \r",
+									"pm.test(\"Response is JSON\", function () {\r",
+									"    pm.response.to.be.json;\r",
+									"});\r",
+									" \r",
+									"pm.test(\"Response has 'responseCode' equal to 200\", function () {\r",
+									"    pm.expect(jsonData.responseCode).to.eql(200);\r",
+									"});\r",
+									" \r",
+									"pm.test(\"Response has the correct 'message'\", function () {\r",
+									"    pm.expect(jsonData.message).to.eql(\"User exists!\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "email",
+									"value": "email@test.test.it",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "password11",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://automationexercise.com/api/verifyLogin",
+							"protocol": "https",
+							"host": [
+								"automationexercise",
+								"com"
+							],
+							"path": [
+								"api",
+								"verifyLogin"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "email@test.test.it",
+									"disabled": true
+								},
+								{
+									"key": "password",
+									"value": "password11",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Update",
+			"item": [
+				{
+					"name": "To Update User Account",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json()\r",
+									"\r",
+									"pm.test(\"HTTP status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									" \r",
+									"pm.test(\"Response is JSON\", function () {\r",
+									"    pm.response.to.be.json;\r",
+									"});\r",
+									" \r",
+									"pm.test(\"Response has 'responseCode' equal to 200\", function () {\r",
+									"    pm.expect(jsonData.responseCode).to.eql(200);\r",
+									"});\r",
+									" \r",
+									"pm.test(\"Response has the correct 'message'\", function () {\r",
+									"    pm.expect(jsonData.message).to.eql(\"User updated!\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "Test",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "email@test.test.it",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "password11",
+									"type": "text"
+								},
+								{
+									"key": "title",
+									"value": "Mrs",
+									"type": "text"
+								},
+								{
+									"key": "birth_date",
+									"value": "50",
+									"type": "text"
+								},
+								{
+									"key": "birth_month",
+									"value": "12",
+									"type": "text"
+								},
+								{
+									"key": "birth_year",
+									"value": "1964",
+									"type": "text"
+								},
+								{
+									"key": "firstname",
+									"value": "tester",
+									"type": "text"
+								},
+								{
+									"key": "lastname",
+									"value": "testerTester",
+									"type": "text"
+								},
+								{
+									"key": "company",
+									"value": "tester",
+									"type": "text"
+								},
+								{
+									"key": "address1",
+									"value": "test 11 test",
+									"type": "text"
+								},
+								{
+									"key": "address2",
+									"value": "test 12 test",
+									"type": "text"
+								},
+								{
+									"key": "country",
+									"value": "test",
+									"type": "text"
+								},
+								{
+									"key": "zipcode",
+									"value": "12589",
+									"type": "text"
+								},
+								{
+									"key": "state",
+									"value": "test",
+									"type": "text"
+								},
+								{
+									"key": "city",
+									"value": "test",
+									"type": "text"
+								},
+								{
+									"key": "mobile_number",
+									"value": "0124521569",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://automationexercise.com/api/updateAccount",
+							"protocol": "https",
+							"host": [
+								"automationexercise",
+								"com"
+							],
+							"path": [
+								"api",
+								"updateAccount"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Users Account detail",
+			"item": [
+				{
+					"name": "user account detail by email",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json()\r",
+									"\r",
+									"pm.test(\"HTTP status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									" \r",
+									"pm.test(\"Response is JSON\", function () {\r",
+									"    pm.response.to.be.json;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has 'responseCode' equal to 200\", function () {\r",
+									"    pm.expect(jsonData.responseCode).to.eql(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"User account is not empty and have all user information\", () => {\r",
+									"    const respData = jsonData.user; // Fixed the reference to responseData\r",
+									"\r",
+									"    pm.expect(respData).to.have.property('id');\r",
+									"    pm.expect(respData).to.have.property('name');\r",
+									"    pm.expect(respData).to.have.property('email');\r",
+									"    pm.expect(respData).to.have.property('title');\r",
+									"    pm.expect(respData).to.have.property('birth_day');\r",
+									"    pm.expect(respData).to.have.property('birth_month');\r",
+									"    pm.expect(respData).to.have.property('birth_year');\r",
+									"    pm.expect(respData).to.have.property('first_name');\r",
+									"    pm.expect(respData).to.have.property('last_name');\r",
+									"    pm.expect(respData).to.have.property('company');\r",
+									"    pm.expect(respData).to.have.property('address1');\r",
+									"    pm.expect(respData).to.have.property('address2');\r",
+									"    pm.expect(respData).to.have.property('country');\r",
+									"    pm.expect(respData).to.have.property('state');\r",
+									"    pm.expect(respData).to.have.property('city');\r",
+									"    pm.expect(respData).to.have.property('zipcode');\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://automationexercise.com/api/getUserDetailByEmail?email=test@test.com&password=test",
+							"protocol": "https",
+							"host": [
+								"automationexercise",
+								"com"
+							],
+							"path": [
+								"api",
+								"getUserDetailByEmail"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "test@test.com"
+								},
+								{
+									"key": "password",
+									"value": "test"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Delete user",
+			"item": [
+				{
+					"name": "To Delete User Account",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();\r",
+									" \r",
+									"pm.test(\"HTTP status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									" \r",
+									"pm.test(\"Response is JSON\", function () {\r",
+									"    pm.response.to.be.json;\r",
+									"});\r",
+									" \r",
+									"pm.test(\"Response has 'responseCode' equal to 200\", function () {\r",
+									"    pm.expect(jsonData.responseCode).to.eql(200);\r",
+									"});\r",
+									" \r",
+									"pm.test(\"Response has the correct 'message'\", function () {\r",
+									"    pm.expect(jsonData.message).to.eql(\"Account deleted!\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "email",
+									"value": "email@test.test.it",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "password11",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://automationexercise.com/api/deleteAccount",
+							"protocol": "https",
+							"host": [
+								"automationexercise",
+								"com"
+							],
+							"path": [
+								"api",
+								"deleteAccount"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "email@test.test.it",
+									"disabled": true
+								},
+								{
+									"key": "password",
+									"value": "password11",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Negative path",
+			"item": [
+				{
+					"name": "To Search Product without search_product parameter",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();\r",
+									" \r",
+									"pm.test(\"HTTP status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									" \r",
+									"pm.test(\"Response is JSON\", function () {\r",
+									"    pm.response.to.be.json;\r",
+									"});\r",
+									" \r",
+									"pm.test(\"Response has 'responseCode' equal to 400\", function () {\r",
+									"    pm.expect(jsonData.responseCode).to.eql(400);\r",
+									"});\r",
+									" \r",
+									"pm.test(\"Response has the correct 'message'\", function () {\r",
+									"    pm.expect(jsonData.message).to.eql(\"Bad request, search_product parameter is missing in POST request.\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "https://automationexercise.com/api/searchProduct",
+							"protocol": "https",
+							"host": [
+								"automationexercise",
+								"com"
+							],
+							"path": [
+								"api",
+								"searchProduct"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "To Verify Login without email parameter",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();\r",
+									" \r",
+									"pm.test(\"HTTP status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									" \r",
+									"pm.test(\"Response is JSON\", function () {\r",
+									"    pm.response.to.be.json;\r",
+									"});\r",
+									" \r",
+									"pm.test(\"Response has 'responseCode' equal to 400\", function () {\r",
+									"    pm.expect(jsonData.responseCode).to.eql(400);\r",
+									"});\r",
+									" \r",
+									"pm.test(\"Response has the correct 'message'\", function () {\r",
+									"    pm.expect(jsonData.message).to.eql(\"Bad request, email or password parameter is missing in POST request.\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "password",
+									"value": "password11",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://automationexercise.com/api/verifyLogin?password=password11",
+							"protocol": "https",
+							"host": [
+								"automationexercise",
+								"com"
+							],
+							"path": [
+								"api",
+								"verifyLogin"
+							],
+							"query": [
+								{
+									"key": "password",
+									"value": "password11"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "To Verify Login with invalid details",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();\r",
+									" \r",
+									"pm.test(\"HTTP status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									" \r",
+									"pm.test(\"Response is JSON\", function () {\r",
+									"    pm.response.to.be.json;\r",
+									"});\r",
+									" \r",
+									"pm.test(\"Response has 'responseCode' equal to 404\", function () {\r",
+									"    pm.expect(jsonData.responseCode).to.eql(404);\r",
+									"});\r",
+									" \r",
+									"pm.test(\"Response has the correct 'message'\", function () {\r",
+									"    pm.expect(jsonData.message).to.eql(\"User not found!\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "email",
+									"value": "email@test.test.it",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "password11",
+									"type": "text"
+								}
+							],
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://automationexercise.com/api/verifyLogin",
+							"protocol": "https",
+							"host": [
+								"automationexercise",
+								"com"
+							],
+							"path": [
+								"api",
+								"verifyLogin"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "test",
+									"disabled": true
+								},
+								{
+									"key": "password",
+									"value": "test",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "To Verify Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();\r",
+									" \r",
+									"pm.test(\"HTTP status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									" \r",
+									"pm.test(\"Response is JSON\", function () {\r",
+									"    pm.response.to.be.json;\r",
+									"});\r",
+									" \r",
+									"pm.test(\"Response has 'responseCode' equal to 405\", function () {\r",
+									"    pm.expect(jsonData.responseCode).to.eql(405);\r",
+									"});\r",
+									" \r",
+									"pm.test(\"Response has the correct 'message'\", function () {\r",
+									"    pm.expect(jsonData.message).to.eql(\"This request method is not supported.\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://automationexercise.com/api/verifyLogin",
+							"protocol": "https",
+							"host": [
+								"automationexercise",
+								"com"
+							],
+							"path": [
+								"api",
+								"verifyLogin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "To All Products List",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();\r",
+									" \r",
+									"pm.test(\"HTTP status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									" \r",
+									"pm.test(\"Response is JSON\", function () {\r",
+									"    pm.response.to.be.json;\r",
+									"});\r",
+									" \r",
+									"pm.test(\"Response has 'responseCode' equal to 405\", function () {\r",
+									"    pm.expect(jsonData.responseCode).to.eql(405);\r",
+									"});\r",
+									" \r",
+									"pm.test(\"Response has the correct 'message'\", function () {\r",
+									"    pm.expect(jsonData.message).to.eql(\"This request method is not supported.\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "https://automationexercise.com/api/productsList",
+							"protocol": "https",
+							"host": [
+								"automationexercise",
+								"com"
+							],
+							"path": [
+								"api",
+								"productsList"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create User Account",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();\r",
+									" \r",
+									"pm.test(\"HTTP status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									" \r",
+									"pm.test(\"Response is JSON\", function () {\r",
+									"    pm.response.to.be.json;\r",
+									"});\r",
+									" \r",
+									"pm.test(\"Response has 'responseCode' equal to 201\", function () {\r",
+									"    pm.expect(jsonData.responseCode).to.eql(201);\r",
+									"});\r",
+									" \r",
+									"pm.test(\"Response has the correct 'message'\", function () {\r",
+									"    pm.expect(jsonData.message).to.eql(\"User created!\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "Test",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "email@test.test.it",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "password11",
+									"type": "text"
+								},
+								{
+									"key": "title",
+									"value": "Mrs",
+									"type": "text"
+								},
+								{
+									"key": "birth_date",
+									"value": "30",
+									"type": "text"
+								},
+								{
+									"key": "birth_month",
+									"value": "12",
+									"type": "text"
+								},
+								{
+									"key": "birth_year",
+									"value": "1991",
+									"type": "text"
+								},
+								{
+									"key": "firstname",
+									"value": "tester",
+									"type": "text"
+								},
+								{
+									"key": "lastname",
+									"value": "testerTester",
+									"type": "text"
+								},
+								{
+									"key": "company",
+									"value": "tester",
+									"type": "text"
+								},
+								{
+									"key": "address1",
+									"value": "test 11 test",
+									"type": "text"
+								},
+								{
+									"key": "address2",
+									"value": "test 12 test",
+									"type": "text"
+								},
+								{
+									"key": "country",
+									"value": "test",
+									"type": "text"
+								},
+								{
+									"key": "zipcode",
+									"value": "12589",
+									"type": "text"
+								},
+								{
+									"key": "state",
+									"value": "test",
+									"type": "text"
+								},
+								{
+									"key": "city",
+									"value": "test",
+									"type": "text"
+								},
+								{
+									"key": "mobile_number",
+									"value": "0124521569",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://automationexercise.com/api/createAccount",
+							"protocol": "https",
+							"host": [
+								"automationexercise",
+								"com"
+							],
+							"path": [
+								"api",
+								"createAccount"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "Test",
+									"disabled": true
+								},
+								{
+									"key": "email",
+									"value": "email@test.test.it",
+									"disabled": true
+								},
+								{
+									"key": "password",
+									"value": "password11",
+									"disabled": true
+								},
+								{
+									"key": "title",
+									"value": "Mrs",
+									"description": "for example: Mr, Mrs, Miss",
+									"disabled": true
+								},
+								{
+									"key": "birth_date",
+									"value": "30",
+									"disabled": true
+								},
+								{
+									"key": "birth_month",
+									"value": "12",
+									"disabled": true
+								},
+								{
+									"key": "birth_year",
+									"value": "1991",
+									"disabled": true
+								},
+								{
+									"key": "firstname",
+									"value": "tester",
+									"disabled": true
+								},
+								{
+									"key": "lastname",
+									"value": "testerTester",
+									"disabled": true
+								},
+								{
+									"key": "company",
+									"value": "tester",
+									"disabled": true
+								},
+								{
+									"key": "address1",
+									"value": "test 11 test",
+									"disabled": true
+								},
+								{
+									"key": "address2",
+									"value": "test 12 test",
+									"disabled": true
+								},
+								{
+									"key": "country",
+									"value": "test",
+									"disabled": true
+								},
+								{
+									"key": "zipcode",
+									"value": "12589",
+									"disabled": true
+								},
+								{
+									"key": "state",
+									"value": "test",
+									"disabled": true
+								},
+								{
+									"key": "city",
+									"value": "test",
+									"disabled": true
+								},
+								{
+									"key": "mobile_number",
+									"value": "0124521569",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New user that already exists",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();\r",
+									" \r",
+									"pm.test(\"HTTP status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									" \r",
+									"pm.test(\"Response is JSON\", function () {\r",
+									"    pm.response.to.be.json;\r",
+									"});\r",
+									" \r",
+									"pm.test(\"Response has 'responseCode' equal to 400\", function () {\r",
+									"    pm.expect(jsonData.responseCode).to.eql(400);\r",
+									"});\r",
+									" \r",
+									"pm.test(\"Response has the correct 'message'\", function () {\r",
+									"    pm.expect(jsonData.message).to.eql(\"Email already exists!\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "Test",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "email@test.test.it",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "password11",
+									"type": "text"
+								},
+								{
+									"key": "title",
+									"value": "Mrs",
+									"type": "text"
+								},
+								{
+									"key": "birth_date",
+									"value": "30",
+									"type": "text"
+								},
+								{
+									"key": "birth_month",
+									"value": "12",
+									"type": "text"
+								},
+								{
+									"key": "birth_year",
+									"value": "1991",
+									"type": "text"
+								},
+								{
+									"key": "firstname",
+									"value": "tester",
+									"type": "text"
+								},
+								{
+									"key": "lastname",
+									"value": "testerTester",
+									"type": "text"
+								},
+								{
+									"key": "company",
+									"value": "tester",
+									"type": "text"
+								},
+								{
+									"key": "address1",
+									"value": "test 11 test",
+									"type": "text"
+								},
+								{
+									"key": "address2",
+									"value": "test 12 test",
+									"type": "text"
+								},
+								{
+									"key": "country",
+									"value": "test",
+									"type": "text"
+								},
+								{
+									"key": "zipcode",
+									"value": "12589",
+									"type": "text"
+								},
+								{
+									"key": "state",
+									"value": "test",
+									"type": "text"
+								},
+								{
+									"key": "city",
+									"value": "test",
+									"type": "text"
+								},
+								{
+									"key": "mobile_number",
+									"value": "0124521569",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://automationexercise.com/api/createAccount",
+							"protocol": "https",
+							"host": [
+								"automationexercise",
+								"com"
+							],
+							"path": [
+								"api",
+								"createAccount"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User Account",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();\r",
+									" \r",
+									"pm.test(\"HTTP status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									" \r",
+									"pm.test(\"Response is JSON\", function () {\r",
+									"    pm.response.to.be.json;\r",
+									"});\r",
+									" \r",
+									"pm.test(\"Response has 'responseCode' equal to 200\", function () {\r",
+									"    pm.expect(jsonData.responseCode).to.eql(200);\r",
+									"});\r",
+									" \r",
+									"pm.test(\"Response has the correct 'message'\", function () {\r",
+									"    pm.expect(jsonData.message).to.eql(\"Account deleted!\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "email",
+									"value": "email@test.test.it",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "password11",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://automationexercise.com/api/deleteAccount",
+							"protocol": "https",
+							"host": [
+								"automationexercise",
+								"com"
+							],
+							"path": [
+								"api",
+								"deleteAccount"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "email@test.test.it",
+									"disabled": true
+								},
+								{
+									"key": "password",
+									"value": "password11",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete already deleted user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();\r",
+									" \r",
+									"pm.test(\"HTTP status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									" \r",
+									"pm.test(\"Response is JSON\", function () {\r",
+									"    pm.response.to.be.json;\r",
+									"});\r",
+									" \r",
+									"pm.test(\"Response has 'responseCode' equal to 404\", function () {\r",
+									"    pm.expect(jsonData.responseCode).to.eql(404);\r",
+									"});\r",
+									" \r",
+									"pm.test(\"Response has the correct 'message'\", function () {\r",
+									"    pm.expect(jsonData.message).to.eql(\"Account not found!\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "email",
+									"value": "email@test.test.it",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "password11",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://automationexercise.com/api/deleteAccount",
+							"protocol": "https",
+							"host": [
+								"automationexercise",
+								"com"
+							],
+							"path": [
+								"api",
+								"deleteAccount"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "email@test.test.it",
+									"disabled": true
+								},
+								{
+									"key": "password",
+									"value": "password11",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					"pm.test(\"Status code is 200\", function () {\r",
+					"    pm.response.to.have.status(200);\r",
+					"});\r",
+					"pm.test(\"Response time is less than 1000ms\", function () {\r",
+					"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+					"});\r",
+					""
+				]
+			}
+		}
+	]
+}
