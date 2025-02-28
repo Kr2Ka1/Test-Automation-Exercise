@@ -94,7 +94,7 @@ function registerUser(username, email, password) {
 //         cy.get(':nth-child(10) > a').should('contain', 'Logged in as').and('be.visible');
 //         cy.get('.shop-menu > .nav > :nth-child(5) > a').contains(' Delete Account').click();
 //         cy.get('h2.title.text-center').should('contain', 'Account Deleted!').and('be.visible');
-//     })
+//     });
 
 // });
 
@@ -435,7 +435,51 @@ function registerUser(username, email, password) {
 
 // });
 
-describe('16. Place Order: Login before Checkout', () => {
+// describe('16. Place Order: Login before Checkout', () => {
+
+//     beforeEach(() => {
+//         cy.visit("http://automationexercise.com");
+//     });
+
+//     it('Verify that home page is visible successfully', () => {
+//         cy.get('body').should('be.visible');
+//     });
+//     it('Create new user', () => {
+//         registerUser('Brokolis2', 'Brokolis2@testas.test.ts', 'testas');
+//     });
+//     it('Login before Checkout ', () => {
+//         cy.get('.fa-lock').trigger('mouseover').click();
+//         cy.contains('.login-form', 'Login to your account').should('be.visible');
+//         cy.get('[data-qa="login-email"]').type('Brokolis2@testas.test.ts',);
+//         cy.get('[data-qa="login-password"]').type('testas');
+//         cy.get('[data-qa="login-button"]').should('be.visible').click();
+//         cy.get(':nth-child(10) > a').should('contain', 'Logged in as').and('be.visible');
+//         cy.get('[data-product-id="2"].btn').eq(0).should('contain', 'Add to cart').and('be.visible').click();
+//         cy.get('.modal-content>.modal-footer>.btn.btn-success.close-modal.btn-block').should('contain', 'Continue Shopping').and('be.visible').click();
+//         cy.get('[data-product-id="3"].btn').eq(0).should('contain', 'Add to cart').and('be.visible').click();
+//         cy.get('.modal-content>.modal-footer>.btn.btn-success.close-modal.btn-block').should('contain', 'Continue Shopping').and('be.visible').click();
+//         cy.get('.shop-menu > .nav > :nth-child(3) > a').should('contain', ' Cart').and('be.visible').click();
+//         cy.get('.table-responsive.cart_info').should('be.visible').and('not.be.empty');
+//         cy.get('.btn.btn-default.check_out').should('contain', 'Proceed To Checkout').and('be.visible').click();
+//         cy.get('#address_delivery>li>h3').should('contain', 'Your delivery address').and('be.visible');
+//         cy.get('.step-one>h2').should('contain', 'Review Your Order').and('be.visible');
+//         cy.get('#ordermsg>.form-control').should('be.visible').type('Pristatymo laikas 10-12 valandomis');
+//         cy.get('.btn.btn-default.check_out').should('be.visible').click();
+//         cy.get('[data-qa="name-on-card"]').should('be.visible').type('Zalias Brokolis');
+//         cy.get('[data-qa="card-number"]').should('be.visible').type('1234567890123456');
+//         cy.get('[data-qa="cvc"]').should('be.visible').type('123');
+//         cy.get('[data-qa="expiry-month"]').should('be.visible').type('12');
+//         cy.get('[data-qa="expiry-year"]').should('be.visible').type('2023');
+//         cy.get('[data-qa="pay-button"]').should('be.visible').click();
+//         // cy.get('#success_message > .alert-success').should('be.visible').and('contain', 'Your order has been placed successfully!');//nepagauna sėkmės alerto
+//         cy.get('.shop-menu > .nav > :nth-child(5) > a').contains(' Delete Account').click();
+//         cy.get('h2.title.text-center').should('contain', 'Account Deleted!').and('be.visible');
+//         cy.get('[data-qa="continue-button"]').should('be.visible').click();
+//     });
+
+// });
+
+describe('17. Remove Products From Cart', () => {
 
     beforeEach(() => {
         cy.visit("http://automationexercise.com");
@@ -445,8 +489,13 @@ describe('16. Place Order: Login before Checkout', () => {
         cy.get('body').should('be.visible');
     });
 
-    it('Add products to cart after register ', () => {
-
+    it.only('Remove products from cart ', () => {
+        cy.get('[data-product-id="2"].btn').eq(0).should('contain', 'Add to cart').and('be.visible').click();
+        cy.get('.modal-content>.modal-footer>.btn.btn-success.close-modal.btn-block').should('contain', 'Continue Shopping').and('be.visible').click();
+        // cy.get('[data-product-id="3"].btn').eq(0).should('contain', 'Add to cart').and('be.visible').click();
+        // cy.get('.modal-content>.modal-footer>.btn.btn-success.close-modal.btn-block').should('contain', 'Continue Shopping').and('be.visible').click();
+        // cy.get('.shop-menu > .nav > :nth-child(3) > a').should('contain', ' Cart').and('be.visible').click();
+        // cy.get('.table-responsive.cart_info').should('be.visible').and('not.be.empty');
     });
 
 });
