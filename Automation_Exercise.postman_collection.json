@@ -374,19 +374,19 @@
 								"exec": [
 									"const respData = pm.response.json();\r",
 									" \r",
-									"// pm.test(\"A search term is mentioned in the product name or category\", () => {\r",
+									"pm.test(\"A search term is mentioned in the product name or category\", () => {\r",
 									"\r",
-									"//     respData.products.forEach((product) => {\r",
+									"    respData.products.forEach((product) => {\r",
 									"\r",
-									"//         const nameIncludesTop = product.name.toLowerCase().includes(pm.collectionVariables.get(\"search_product\"));\r",
+									"        const nameIncludesTop = product.name.toLowerCase().includes(pm.collectionVariables.get(\"search_product\"));\r",
 									"\r",
-									"//         const categoryIncludesTop = product.category.category.toLowerCase().includes(pm.collectionVariables.get(\"search_product\"));\r",
+									"        const categoryIncludesTop = product.category.category.toLowerCase().includes(pm.collectionVariables.get(\"search_product\"));\r",
 									" \r",
-									"//         pm.expect(nameIncludesTop || categoryIncludesTop).to.be.true;\r",
+									"        pm.expect(nameIncludesTop || categoryIncludesTop).to.be.true;\r",
 									"\r",
-									"//     });\r",
+									"    });\r",
 									"\r",
-									"// })\r",
+									"})\r",
 									" pm.test(\"A search term is mentioned in the product name or category\", () => {\r",
 									"    // Įtraukiame paieškos žodį iš kolekcijos kintamojo\r",
 									"    const searchTerm = pm.collectionVariables.get(\"search_product\").toLowerCase();\r",
@@ -494,7 +494,7 @@
 							"formdata": [
 								{
 									"key": "search_product",
-									"value": "top",
+									"value": "{{search_product}}",
 									"type": "text"
 								}
 							]
@@ -1373,6 +1373,13 @@
 								"type": "text/javascript",
 								"packages": {}
 							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [],
+								"type": "text/javascript"
+							}
 						}
 					],
 					"request": {
@@ -1437,6 +1444,13 @@
 								"type": "text/javascript",
 								"packages": {}
 							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [],
+								"type": "text/javascript"
+							}
 						}
 					],
 					"request": {
@@ -1455,12 +1469,7 @@
 									"value": "password11",
 									"type": "text"
 								}
-							],
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
+							]
 						},
 						"url": {
 							"raw": "https://automationexercise.com/api/verifyLogin",
@@ -1516,6 +1525,13 @@
 								],
 								"type": "text/javascript",
 								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -2172,9 +2188,17 @@
 					"pm.test(\"Response time is less than 1000ms\", function () {\r",
 					"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
 					"});\r",
+					"\r",
 					""
 				]
 			}
+		}
+	],
+	"variable": [
+		{
+			"key": "search_product",
+			"value": "top",
+			"type": "string"
 		}
 	]
 }

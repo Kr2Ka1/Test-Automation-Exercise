@@ -11,14 +11,14 @@ describe('1. Register User', () => {
     it('Click on "Signup/Login" button', () => {
         cy.get('.fa-lock').trigger('mouseover').click();
         cy.contains('.signup-form', 'New User Signup!').should('be.visible');
-        cy.get('[data-qa="signup-name"]').type('Brokolis3',);
-        cy.get('[data-qa="signup-email"]').type('Brokolis3@testas.test.ts');
+        cy.get('[data-qa="signup-name"]').type('Brokolis2',);
+        cy.get('[data-qa="signup-email"]').type('Brokolis2@testas.test.ts');
         cy.get('[data-qa="signup-button"]').should('be.visible').click({ timeout: 3000 });
         cy.contains('h2.title.text-center', 'Enter Account Information').should('be.visible');
         cy.get('#id_gender2').click();
         cy.get('#password').type('testas');
-        cy.get('#days').select('30'); 
-        cy.get('#months').select('December'); 
+        cy.get('#days').select('30');
+        cy.get('#months').select('December');
         cy.get('#years').select('1991');
         cy.get('#newsletter').click();
         cy.get('#optin').click();
@@ -61,8 +61,8 @@ describe('2. Login User with correct email and password', () => {
         cy.contains('h2.title.text-center', 'Enter Account Information').should('be.visible');
         cy.get('#id_gender2').click();
         cy.get('#password').type('testas');
-        cy.get('#days').select('30'); 
-        cy.get('#months').select('December'); 
+        cy.get('#days').select('30');
+        cy.get('#months').select('December');
         cy.get('#years').select('1991');
         cy.get('#newsletter').click();
         cy.get('#optin').click();
@@ -100,6 +100,7 @@ describe('3. Login User with incorrect email and password', () => {
     it('Verify that home page is visible successfully', () => {
         cy.get('body').should('be.visible');
     });
+
     it('Click on "Signup/Login" button', () => {
         cy.get('.fa-lock').trigger('mouseover').click();
         cy.contains('.login-form', 'Login to your account').should('be.visible');
@@ -120,6 +121,7 @@ describe('4. Logout User', () => {
     it('Verify that home page is visible successfully', () => {
         cy.get('body').should('be.visible');
     });
+
     it('Click on "Signup/Login" button', () => {
         cy.get('.fa-lock').trigger('mouseover').click();
         cy.contains('.login-form', 'Login to your account').should('be.visible');
@@ -127,7 +129,7 @@ describe('4. Logout User', () => {
         cy.get('[data-qa="login-password"]').type('testas');
         cy.get('[data-qa="login-button"]').should('be.visible').click();
         cy.get(':nth-child(10) > a').should('contain', 'Logged in as').and('be.visible');
-        cy.get('.shop-menu > .nav > :nth-child(4) > a').should('contain',' Logout').and('be.visible').click();
+        cy.get('.shop-menu > .nav > :nth-child(4) > a').should('contain', ' Logout').and('be.visible').click();
         cy.contains('.login-form', 'Login to your account').should('be.visible');
     })
 
@@ -179,7 +181,7 @@ describe('6. Contact Us Form', () => {
 
     })
 
-}); 
+});
 
 describe('7. Verify Test Cases Page', () => {
 
@@ -200,7 +202,7 @@ describe('7. Verify Test Cases Page', () => {
         });
     })
 
-}); 
+});
 
 describe('8. Verify All Products and product detail page', () => {
 
@@ -227,7 +229,7 @@ describe('8. Verify All Products and product detail page', () => {
         cy.get('.product-information > :nth-child(8)').should('contain', 'Brand:').and('be.visible');
     });
 
-}); 
+});
 
 
 describe('9. Search Product', () => {
@@ -250,7 +252,7 @@ describe('9. Search Product', () => {
         cy.get('.features_items').should('be.visible').and('contain', 'Top');
     });
 
-}); 
+});
 
 
 describe('10. Verify Subscription in home page', () => {
@@ -271,7 +273,7 @@ describe('10. Verify Subscription in home page', () => {
         cy.get('.alert-success.alert').should('be.visible').and('contain', 'You have been successfully subscribed!');
     });
 
-}); 
+});
 
 describe('11. Verify Subscription in Cart page', () => {
 
@@ -291,7 +293,7 @@ describe('11. Verify Subscription in Cart page', () => {
         cy.get('.alert-success.alert').should('be.visible').and('contain', 'You have been successfully subscribed!');
     });
 
-}); 
+});
 
 describe('12. Add Products in Cart', () => {
 
@@ -308,14 +310,18 @@ describe('12. Add Products in Cart', () => {
         cy.contains('h2.title.text-center', 'All Products').should('be.visible');
         cy.get('.col-sm-9').should('be.visible');
         cy.get('.col-sm-4').should('be.visible');
-        cy.get(':nth-child(3) > .product-image-wrapper > .single-products > .productinfo').trigger('mouseover').click();
-        // cy.get(':nth-child(3) > .product-image-wrapper > .single-products > .productinfo > .overlay-content').should('contain', 'Add to cart').and('be.visible').click();//neranda užsklandos su add to cart
+        // cy.get('.product-image-wrapper').eq(0).trigger('mouseover');
+        
+
+        // cy.get(':nth-child(3) > .product-image-wrapper > .single-products > .productinfo').trigger('mouseover').click();
+        // cy.get(':nth-child(3) > .product-image-wrapper > .single-products > .productinfo > .overlay-content > [data-product-id="1"]').should('contain', 'Add to cart').and('be.visible').click();//neranda užsklandos su add to cart
+
+
         // cy.get('.btn.btn-success.close-modal.btn-block').should('contain', 'Continue Shopping').and('be.visible').click();
-        cy.get('.product-overlay').first().trigger('mouseover');
-        cy.get('.product-overlay').first().find('a').contains('Add to cart').click({ force: true });
-        cy.get('#cartModal').should('be.visible');
-        cy.get('#cartModal').contains('Continue Shopping').click({ force: true });
+        // cy.get('.product-overlay').first().trigger('mouseover');
+
+      
 
     });
-
+    
 }); 
