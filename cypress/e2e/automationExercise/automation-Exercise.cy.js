@@ -348,7 +348,138 @@
 
 // });
 
-describe('14. Place Order: Register while Checkout', () => {
+// describe('14. Place Order: Register while Checkout', () => {
+
+//     beforeEach(() => {
+//         cy.visit("http://automationexercise.com");
+//     });
+
+//     it('Verify that home page is visible successfully', () => {
+//         cy.get('body').should('be.visible');
+//     });
+
+//     it.('Add products to cart before register', () => {
+//         cy.get('[data-product-id="2"].btn').eq(0).should('contain', 'Add to cart').and('be.visible').click();
+//         cy.get('.modal-content>.modal-footer>.btn.btn-success.close-modal.btn-block').should('contain', 'Continue Shopping').and('be.visible').click();
+//         cy.get('[data-product-id="3"].btn').eq(0).should('contain', 'Add to cart').and('be.visible').click();
+//         cy.get('.modal-content>.modal-footer>.btn.btn-success.close-modal.btn-block').should('contain', 'Continue Shopping').and('be.visible').click();
+//         cy.get('[data-product-id="8"].btn').eq(0).should('contain', 'Add to cart').and('be.visible').click();
+//         cy.get('.modal-content>.modal-footer>.btn.btn-success.close-modal.btn-block').should('contain', 'Continue Shopping').and('be.visible').click();
+//         cy.get('.shop-menu > .nav > :nth-child(3) > a').should('contain', ' Cart').and('be.visible').click();
+//         cy.get('.table-responsive.cart_info').should('be.visible').and('not.be.empty');//kai krepšialis tuščias vis tiek nemeta klaidos, kodėl?
+//         cy.get('.col-sm-6>.btn.btn-default.check_out').should('contain', 'Proceed To Checkout').and('be.visible').click();
+//         cy.get('.modal-body > :nth-child(2) > a > u').should('contain', 'Register / Login').and('be.visible').click();
+//         cy.get('[data-qa="signup-name"]').type('Brokolis2',);
+//         cy.get('[data-qa="signup-email"]').type('Brokolis2@testas.test.ts');
+//         cy.get('[data-qa="signup-button"]').should('be.visible').click({ timeout: 3000 });
+//         cy.contains('h2.title.text-center', 'Enter Account Information').should('be.visible');
+//         cy.get('#id_gender2').click();
+//         cy.get('#password').type('testas');
+//         cy.get('#days').select('30');
+//         cy.get('#months').select('December');
+//         cy.get('#years').select('1991');
+//         cy.get('#newsletter').click();
+//         cy.get('#optin').click();
+//         cy.get('#first_name').type('Zalias');
+//         cy.get('#last_name').type('Brokolis');
+//         cy.get('#company').type('Medis');
+//         cy.get('#address1').type('Adresas naujas 8 Medis');
+//         cy.get('#address2').type('Manoadresas zalias 10 Senis');
+//         cy.get('#country').select('Canada');
+//         cy.get('#state').type('New');
+//         cy.get('#city').type('test');
+//         cy.get('#zipcode').type('2145632');
+//         cy.get('#mobile_number').type('2563259658962');
+//         cy.get('[data-qa="create-account"]').click();
+//         cy.get('h2.title.text-center').should("contain", 'Account Created!').and('be.visible');
+//         cy.get('[data-qa="continue-button"]').click();
+//         cy.get(':nth-child(10) > a').should('contain', 'Logged in as').and('be.visible');
+//         cy.get('.shop-menu > .nav > :nth-child(3) > a').should('contain', ' Cart').and('be.visible').click();
+//         cy.get('.btn.btn-default.check_out').should('contain', 'Proceed To Checkout').and('be.visible').click();
+//         cy.get('#address_delivery>li>h3').should('contain', 'Your delivery address').and('be.visible');
+//         cy.get('.step-one>h2').should('contain', 'Review Your Order').and('be.visible');
+//         cy.get('#ordermsg>.form-control').should('be.visible').type('Pristatymo laikas 10-12 valandomis');
+//         cy.get('.btn.btn-default.check_out').should('be.visible').click();
+//         cy.get('[data-qa="name-on-card"]').should('be.visible').type('Zalias Brokolis');
+//         cy.get('[data-qa="card-number"]').should('be.visible').type('1234567890123456');
+//         cy.get('[data-qa="cvc"]').should('be.visible').type('123');
+//         cy.get('[data-qa="expiry-month"]').should('be.visible').type('12');
+//         cy.get('[data-qa="expiry-year"]').should('be.visible').type('2023');
+//         cy.get('[data-qa="pay-button"]').should('be.visible').click();
+//         // cy.get('#success_message > .alert-success').should('be.visible').and('contain', 'Your order has been placed successfully!');//nepagauna sėkmės alerto
+//         cy.get('.shop-menu > .nav > :nth-child(5) > a').contains(' Delete Account').click();
+//         cy.get('h2.title.text-center').should('contain', 'Account Deleted!').and('be.visible');
+//         cy.get('[data-qa="continue-button"]').should('be.visible').click();
+
+//     });
+
+// });
+
+
+// describe('15. Place Order: Register before Checkout', () => {
+
+//     beforeEach(() => {
+//         cy.visit("http://automationexercise.com");
+//     });
+
+//     it('Verify that home page is visible successfully', () => {
+//         cy.get('body').should('be.visible');
+//     });
+
+//     it('Add products to cart after register ', () => {
+//         cy.get('.fa-lock').trigger('mouseover').click();
+//         cy.contains('.signup-form', 'New User Signup!').should('be.visible');
+//         cy.get('[data-qa="signup-name"]').type('Brokolis2',);
+//         cy.get('[data-qa="signup-email"]').type('Brokolis2@testas.test.ts');
+//         cy.get('[data-qa="signup-button"]').should('be.visible').click({ timeout: 3000 });
+//         cy.contains('h2.title.text-center', 'Enter Account Information').should('be.visible');
+//         cy.get('#id_gender2').click();
+//         cy.get('#password').type('testas');
+//         cy.get('#days').select('30');
+//         cy.get('#months').select('December');
+//         cy.get('#years').select('1991');
+//         cy.get('#newsletter').click();
+//         cy.get('#optin').click();
+//         cy.get('#first_name').type('Zalias');
+//         cy.get('#last_name').type('Brokolis');
+//         cy.get('#company').type('Medis');
+//         cy.get('#address1').type('Adresas naujas 8 Medis');
+//         cy.get('#address2').type('Manoadresas zalias 10 Senis');
+//         cy.get('#country').select('Canada');
+//         cy.get('#state').type('New');
+//         cy.get('#city').type('test');
+//         cy.get('#zipcode').type('2145632');
+//         cy.get('#mobile_number').type('2563259658962');
+//         cy.get('[data-qa="create-account"]').click();
+//         cy.get('h2.title.text-center').should("contain", 'Account Created!').and('be.visible');
+//         cy.get('[data-qa="continue-button"]').click();
+//         cy.get(':nth-child(10) > a').should('contain', 'Logged in as').and('be.visible');
+//         cy.get('[data-product-id="2"].btn').eq(0).should('contain', 'Add to cart').and('be.visible').click();
+//         cy.get('.modal-content>.modal-footer>.btn.btn-success.close-modal.btn-block').should('contain', 'Continue Shopping').and('be.visible').click();
+//         cy.get('[data-product-id="3"].btn').eq(0).should('contain', 'Add to cart').and('be.visible').click();
+//         cy.get('.modal-content>.modal-footer>.btn.btn-success.close-modal.btn-block').should('contain', 'Continue Shopping').and('be.visible').click();
+//         cy.get('.shop-menu > .nav > :nth-child(3) > a').should('contain', ' Cart').and('be.visible').click();
+//         cy.get('.table-responsive.cart_info').should('be.visible').and('not.be.empty');
+//         cy.get('.btn.btn-default.check_out').should('contain', 'Proceed To Checkout').and('be.visible').click();
+//         cy.get('#address_delivery>li>h3').should('contain', 'Your delivery address').and('be.visible');
+//         cy.get('.step-one>h2').should('contain', 'Review Your Order').and('be.visible');
+//         cy.get('#ordermsg>.form-control').should('be.visible').type('Pristatymo laikas 10-12 valandomis');
+//         cy.get('.btn.btn-default.check_out').should('be.visible').click();
+//         cy.get('[data-qa="name-on-card"]').should('be.visible').type('Zalias Brokolis');
+//         cy.get('[data-qa="card-number"]').should('be.visible').type('1234567890123456');
+//         cy.get('[data-qa="cvc"]').should('be.visible').type('123');
+//         cy.get('[data-qa="expiry-month"]').should('be.visible').type('12');
+//         cy.get('[data-qa="expiry-year"]').should('be.visible').type('2023');
+//         cy.get('[data-qa="pay-button"]').should('be.visible').click();
+//         // cy.get('#success_message > .alert-success').should('be.visible').and('contain', 'Your order has been placed successfully!');//nepagauna sėkmės alerto
+//         cy.get('.shop-menu > .nav > :nth-child(5) > a').contains(' Delete Account').click();
+//         cy.get('h2.title.text-center').should('contain', 'Account Deleted!').and('be.visible');
+//         cy.get('[data-qa="continue-button"]').should('be.visible').click();
+//     });
+
+// });
+
+describe('16. Place Order: Login before Checkout', () => {
 
     beforeEach(() => {
         cy.visit("http://automationexercise.com");
@@ -358,59 +489,8 @@ describe('14. Place Order: Register while Checkout', () => {
         cy.get('body').should('be.visible');
     });
 
-    it.only('Add products to cart ', () => {
-        cy.get('[data-product-id="2"].btn').eq(0).should('contain', 'Add to cart').and('be.visible').click();
-        cy.get('.modal-content>.modal-footer>.btn.btn-success.close-modal.btn-block').should('contain', 'Continue Shopping').and('be.visible').click();
-        cy.get('[data-product-id="3"].btn').eq(0).should('contain', 'Add to cart').and('be.visible').click();
-        cy.get('.modal-content>.modal-footer>.btn.btn-success.close-modal.btn-block').should('contain', 'Continue Shopping').and('be.visible').click();
-        cy.get('[data-product-id="8"].btn').eq(0).should('contain', 'Add to cart').and('be.visible').click();
-        cy.get('.modal-content>.modal-footer>.btn.btn-success.close-modal.btn-block').should('contain', 'Continue Shopping').and('be.visible').click();
-        cy.get('.shop-menu > .nav > :nth-child(3) > a').should('contain', ' Cart').and('be.visible').click();
-        cy.get('.table-responsive.cart_info').should('be.visible').and('not.be.empty');//kai krepšialis tuščias vis tiek nemeta klaidos, kodėl?
-        cy.get('.col-sm-6>.btn.btn-default.check_out').should('contain', 'Proceed To Checkout').and('be.visible').click();
-        cy.get('.modal-body > :nth-child(2) > a > u').should('contain', 'Register / Login').and('be.visible').click();
-        cy.get('[data-qa="signup-name"]').type('Brokolis2',);
-        cy.get('[data-qa="signup-email"]').type('Brokolis2@testas.test.ts');
-        cy.get('[data-qa="signup-button"]').should('be.visible').click({ timeout: 3000 });
-        cy.contains('h2.title.text-center', 'Enter Account Information').should('be.visible');
-        cy.get('#id_gender2').click();
-        cy.get('#password').type('testas');
-        cy.get('#days').select('30');
-        cy.get('#months').select('December');
-        cy.get('#years').select('1991');
-        cy.get('#newsletter').click();
-        cy.get('#optin').click();
-        cy.get('#first_name').type('Zalias');
-        cy.get('#last_name').type('Brokolis');
-        cy.get('#company').type('Medis');
-        cy.get('#address1').type('Adresas naujas 8 Medis');
-        cy.get('#address2').type('Manoadresas zalias 10 Senis');
-        cy.get('#country').select('Canada');
-        cy.get('#state').type('New');
-        cy.get('#city').type('test');
-        cy.get('#zipcode').type('2145632');
-        cy.get('#mobile_number').type('2563259658962');
-        cy.get('[data-qa="create-account"]').click();
-        cy.get('h2.title.text-center').should("contain", 'Account Created!').and('be.visible');
-        cy.get('[data-qa="continue-button"]').click();
-        cy.get(':nth-child(10) > a').should('contain', 'Logged in as').and('be.visible');
-        cy.get('.shop-menu > .nav > :nth-child(3) > a').should('contain', ' Cart').and('be.visible').click();
-        cy.get('.btn.btn-default.check_out').should('contain', 'Proceed To Checkout').and('be.visible').click();
-        cy.get('#address_delivery>li>h3').should('contain', 'Your delivery address').and('be.visible');
-        cy.get('.step-one>h2').should('contain', 'Review Your Order').and('be.visible');
-        cy.get('#ordermsg>.form-control').should('be.visible').type('Pristatymo laikas 10-12 valandomis');
-        cy.get('.btn.btn-default.check_out').should('be.visible').click();
-        cy.get('[data-qa="name-on-card"]').should('be.visible').type('Zalias Brokolis');
-        cy.get('[data-qa="card-number"]').should('be.visible').type('1234567890123456');
-        cy.get('[data-qa="cvc"]').should('be.visible').type('123');
-        cy.get('[data-qa="expiry-month"]').should('be.visible').type('12');
-        cy.get('[data-qa="expiry-year"]').should('be.visible').type('2023');
-        cy.get('[data-qa="pay-button"]').should('be.visible').click();
-        // cy.get('.alert.alert-success').should('be.visible').and('contain', 'Your order has been placed successfully!');//nepagauna sėkmės alerto
-        cy.get('.shop-menu > .nav > :nth-child(5) > a').contains(' Delete Account').click();
-        cy.get('h2.title.text-center').should('contain', 'Account Deleted!').and('be.visible');
-        cy.get('[data-qa="continue-button"]').should('be.visible').click();
-
+    it('Add products to cart after register ', () => {
+   
     });
 
 });
