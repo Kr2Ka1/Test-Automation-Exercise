@@ -1,5 +1,34 @@
 /// <reference types="cypress" />
 
+function registerUser(username, email, password) {
+    cy.get('.fa-lock').trigger('mouseover').click();
+    cy.get('[data-qa="signup-name"]').type(username);
+    cy.get('[data-qa="signup-email"]').type(email);
+    cy.get('[data-qa="signup-button"]').click();
+    cy.contains('h2.title.text-center', 'Enter Account Information').should('be.visible');
+    cy.get('#id_gender2').click();
+    cy.get('#password').type(password);
+    cy.get('#days').select('30');
+    cy.get('#months').select('December');
+    cy.get('#years').select('1991');
+    cy.get('#newsletter').click();
+    cy.get('#optin').click();
+    cy.get('#first_name').type('Zalias');
+    cy.get('#last_name').type('Brokolis');
+    cy.get('#company').type('Medis');
+    cy.get('#address1').type('Adresas naujas 8 Medis');
+    cy.get('#address2').type('Manoadresas zalias 10 Senis');
+    cy.get('#country').select('Canada');
+    cy.get('#state').type('New');
+    cy.get('#city').type('test');
+    cy.get('#zipcode').type('2145632');
+    cy.get('#mobile_number').type('2563259658962');
+    cy.get('[data-qa="create-account"]').click();
+    cy.get('h2.title.text-center').should("contain", 'Account Created!');
+    cy.get('[data-qa="continue-button"]').click();
+    cy.get(':nth-child(10) > a').should('contain', 'Logged in as').and('be.visible');
+}
+
 // describe('1. Register User', () => {
 
 //     beforeEach(() => {
@@ -53,30 +82,7 @@
 //         cy.get('body').should('be.visible');
 //     });
 //     it('Create new user', () => {
-//         cy.get('.fa-lock').trigger('mouseover').click();
-//         cy.contains('.signup-form', 'New User Signup!').should('be.visible');
-//         cy.get('[data-qa="signup-name"]').type('Brokolis2',);
-//         cy.get('[data-qa="signup-email"]').type('Brokolis2@testas.test.ts');
-//         cy.get('[data-qa="signup-button"]').should('be.visible').click({ timeout: 3000 });
-//         cy.contains('h2.title.text-center', 'Enter Account Information').should('be.visible');
-//         cy.get('#id_gender2').click();
-//         cy.get('#password').type('testas');
-//         cy.get('#days').select('30');
-//         cy.get('#months').select('December');
-//         cy.get('#years').select('1991');
-//         cy.get('#newsletter').click();
-//         cy.get('#optin').click();
-//         cy.get('#first_name').type('Zalias');
-//         cy.get('#last_name').type('Brokolis');
-//         cy.get('#company').type('Medis');
-//         cy.get('#address1').type('Adresas naujas 8 Medis');
-//         cy.get('#address2').type('Manoadresas zalias 10 Senis');
-//         cy.get('#country').select('Canada');
-//         cy.get('#state').type('New');
-//         cy.get('#city').type('test');
-//         cy.get('#zipcode').type('2145632');
-//         cy.get('#mobile_number').type('2563259658962');
-//         cy.get('[data-qa="create-account"]').click();
+//         registerUser('Brokolis2', 'Brokolis2@testas.test.ts', 'testas');
 //     })
 
 //     it('Registrate user login', () => {
@@ -358,7 +364,7 @@
 //         cy.get('body').should('be.visible');
 //     });
 
-//     it.('Add products to cart before register', () => {
+//     it('Add products to cart before register', () => {
 //         cy.get('[data-product-id="2"].btn').eq(0).should('contain', 'Add to cart').and('be.visible').click();
 //         cy.get('.modal-content>.modal-footer>.btn.btn-success.close-modal.btn-block').should('contain', 'Continue Shopping').and('be.visible').click();
 //         cy.get('[data-product-id="3"].btn').eq(0).should('contain', 'Add to cart').and('be.visible').click();
@@ -369,31 +375,7 @@
 //         cy.get('.table-responsive.cart_info').should('be.visible').and('not.be.empty');//kai krepšialis tuščias vis tiek nemeta klaidos, kodėl?
 //         cy.get('.col-sm-6>.btn.btn-default.check_out').should('contain', 'Proceed To Checkout').and('be.visible').click();
 //         cy.get('.modal-body > :nth-child(2) > a > u').should('contain', 'Register / Login').and('be.visible').click();
-//         cy.get('[data-qa="signup-name"]').type('Brokolis2',);
-//         cy.get('[data-qa="signup-email"]').type('Brokolis2@testas.test.ts');
-//         cy.get('[data-qa="signup-button"]').should('be.visible').click({ timeout: 3000 });
-//         cy.contains('h2.title.text-center', 'Enter Account Information').should('be.visible');
-//         cy.get('#id_gender2').click();
-//         cy.get('#password').type('testas');
-//         cy.get('#days').select('30');
-//         cy.get('#months').select('December');
-//         cy.get('#years').select('1991');
-//         cy.get('#newsletter').click();
-//         cy.get('#optin').click();
-//         cy.get('#first_name').type('Zalias');
-//         cy.get('#last_name').type('Brokolis');
-//         cy.get('#company').type('Medis');
-//         cy.get('#address1').type('Adresas naujas 8 Medis');
-//         cy.get('#address2').type('Manoadresas zalias 10 Senis');
-//         cy.get('#country').select('Canada');
-//         cy.get('#state').type('New');
-//         cy.get('#city').type('test');
-//         cy.get('#zipcode').type('2145632');
-//         cy.get('#mobile_number').type('2563259658962');
-//         cy.get('[data-qa="create-account"]').click();
-//         cy.get('h2.title.text-center').should("contain", 'Account Created!').and('be.visible');
-//         cy.get('[data-qa="continue-button"]').click();
-//         cy.get(':nth-child(10) > a').should('contain', 'Logged in as').and('be.visible');
+//         registerUser('Brokolis2', 'Brokolis2@testas.test.ts', 'testas');
 //         cy.get('.shop-menu > .nav > :nth-child(3) > a').should('contain', ' Cart').and('be.visible').click();
 //         cy.get('.btn.btn-default.check_out').should('contain', 'Proceed To Checkout').and('be.visible').click();
 //         cy.get('#address_delivery>li>h3').should('contain', 'Your delivery address').and('be.visible');
@@ -427,33 +409,7 @@
 //     });
 
 //     it('Add products to cart after register ', () => {
-//         cy.get('.fa-lock').trigger('mouseover').click();
-//         cy.contains('.signup-form', 'New User Signup!').should('be.visible');
-//         cy.get('[data-qa="signup-name"]').type('Brokolis2',);
-//         cy.get('[data-qa="signup-email"]').type('Brokolis2@testas.test.ts');
-//         cy.get('[data-qa="signup-button"]').should('be.visible').click({ timeout: 3000 });
-//         cy.contains('h2.title.text-center', 'Enter Account Information').should('be.visible');
-//         cy.get('#id_gender2').click();
-//         cy.get('#password').type('testas');
-//         cy.get('#days').select('30');
-//         cy.get('#months').select('December');
-//         cy.get('#years').select('1991');
-//         cy.get('#newsletter').click();
-//         cy.get('#optin').click();
-//         cy.get('#first_name').type('Zalias');
-//         cy.get('#last_name').type('Brokolis');
-//         cy.get('#company').type('Medis');
-//         cy.get('#address1').type('Adresas naujas 8 Medis');
-//         cy.get('#address2').type('Manoadresas zalias 10 Senis');
-//         cy.get('#country').select('Canada');
-//         cy.get('#state').type('New');
-//         cy.get('#city').type('test');
-//         cy.get('#zipcode').type('2145632');
-//         cy.get('#mobile_number').type('2563259658962');
-//         cy.get('[data-qa="create-account"]').click();
-//         cy.get('h2.title.text-center').should("contain", 'Account Created!').and('be.visible');
-//         cy.get('[data-qa="continue-button"]').click();
-//         cy.get(':nth-child(10) > a').should('contain', 'Logged in as').and('be.visible');
+//         registerUser('Brokolis2', 'Brokolis2@testas.test.ts', 'testas');
 //         cy.get('[data-product-id="2"].btn').eq(0).should('contain', 'Add to cart').and('be.visible').click();
 //         cy.get('.modal-content>.modal-footer>.btn.btn-success.close-modal.btn-block').should('contain', 'Continue Shopping').and('be.visible').click();
 //         cy.get('[data-product-id="3"].btn').eq(0).should('contain', 'Add to cart').and('be.visible').click();
@@ -490,7 +446,7 @@ describe('16. Place Order: Login before Checkout', () => {
     });
 
     it('Add products to cart after register ', () => {
-   
+
     });
 
 });
