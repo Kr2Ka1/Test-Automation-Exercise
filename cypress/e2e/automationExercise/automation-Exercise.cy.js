@@ -581,13 +581,40 @@ describe('19. View & Cart Brand Products', () => {
         cy.get('body').should('be.visible');
     });
 
-    it.only('Products button ', () => {
+    it('Products button ', () => {
         cy.get('.shop-menu > .nav > :nth-child(2) > a').should('contain', ' Products').and('be.visible').click();
         cy.get('.brands_products > h2').should('contain', 'Brands').and('be.visible');
         cy.get('a[href="/brand_products/H&M"]').should('be.visible').click();
         cy.get('h2.title.text-center').should('contain', 'Brand - H&M Products').and('be.visible');
         cy.get('a[href="/brand_products/Mast & Harbour"]').should('be.visible').click();
         cy.get('h2.title').should('contain', 'Brand - Mast & Harbour Products').and('be.visible');
+    });
+
+});
+
+describe('20. Search Products and Verify Cart After Login', () => {
+
+    beforeEach(() => {
+        cy.visit("http://automationexercise.com");
+    });
+
+    it('Verify that home page is visible successfully', () => {
+        cy.get('body').should('be.visible');
+    });
+
+    it.only('Products button ', () => {
+        cy.get('.shop-menu > .nav > :nth-child(2) > a').should('contain', ' Products').and('be.visible').click();
+        cy.contains('h2.title.text-center', 'All Products').should('be.visible');
+        cy.get('#search_product').should('be.visible').type('top');
+        cy.get('#submit_search').should('be.visible').click();
+        cy.get('h2.title.text-center').should('contain', 'Searched Products').and('be.visible');
+        cy.get('.col-sm-4').should('contain', 'Top').and('be.visible');
+        cy.get('[data-product-id="1"].btn').eq(0).should('contain', 'Add to cart').and('be.visible').click();
+        cy.get('.modal-content>.modal-footer>.btn.btn-success.close-modal.btn-block').should('contain', 'Continue Shopping').and('be.visible').click();
+        cy.get('[data-product-id="5"].btn').eq(0).should('contain', 'Add to cart').and('be.visible').click();
+        cy.get('.modal-content>.modal-footer>.btn.btn-success.close-modal.btn-block').should('contain', 'Continue Shopping').and('be.visible').click();
+        cy.get('.shop-menu > .nav > :nth-child(3) > a').should('contain', ' Cart').and('be.visible').click();
+        cy.get('#cart_info').should('be.visible').and('not.be.empty');
     });
 
 });
