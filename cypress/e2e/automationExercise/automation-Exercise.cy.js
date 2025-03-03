@@ -602,7 +602,7 @@ describe('20. Search Products and Verify Cart After Login', () => {
         cy.get('body').should('be.visible');
     });
 
-    it.only('Products button ', () => {
+    it('Products button ', () => {
         cy.get('.shop-menu > .nav > :nth-child(2) > a').should('contain', ' Products').and('be.visible').click();
         cy.contains('h2.title.text-center', 'All Products').should('be.visible');
         cy.get('#search_product').should('be.visible').type('top');
