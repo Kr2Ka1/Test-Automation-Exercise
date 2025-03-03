@@ -615,6 +615,12 @@ describe('20. Search Products and Verify Cart After Login', () => {
         cy.get('.modal-content>.modal-footer>.btn.btn-success.close-modal.btn-block').should('contain', 'Continue Shopping').and('be.visible').click();
         cy.get('.shop-menu > .nav > :nth-child(3) > a').should('contain', ' Cart').and('be.visible').click();
         cy.get('#cart_info').should('be.visible').and('not.be.empty');
+        cy.get('.fa-lock').trigger('mouseover').click();
+        cy.get('[data-qa="login-email"]').type('Brokolis@testas.test.ts',);
+        cy.get('[data-qa="login-password"]').type('testas');
+        cy.get('[data-qa="login-button"]').should('be.visible').click();
+        cy.get('.shop-menu > .nav > :nth-child(3) > a').should('contain', ' Cart').and('be.visible').click();
+        cy.get('#cart_info').should('be.visible').and('not.be.empty');
     });
 
 });
